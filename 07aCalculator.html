@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-color: rgb(240, 240, 240);
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calculator {
+      background-color: rgb(34, 37, 32);
+      box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.533);
+      padding: 15px;
+      display: grid;
+      grid-template-columns: repeat(4, 50px);
+      gap: 10px;
+      border-radius: 8px;
+    }
+    input {
+      grid-column: span 4;
+      height: 70px;
+      text-align: end;
+      font-size: 2rem;
+      font-weight: 500;
+      border: none;
+      background-color: transparent;
+      color: rgb(255, 255, 255);
+      padding: 10px;
+      margin: 10px 0;
+      outline: none;
+    }
+    button {
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      padding: 5px;
+      border-radius: 50%;
+      border: none;
+      color: rgb(255, 255, 255);
+      background-color: rgb(47, 56, 77);
+      font-size: 1rem;
+    }
+    .operator {
+      color: orange;
+    }
+    .functional {
+      color: aqua;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="calculator">
+      <input type="text" placeholder="0" readonly id="outputvalue">
+      <button class="functional" type="button">AC</button>
+      <button class="functional" type="button">CE</button>
+      <button class="operator" type="button">%</button>
+      <button class="operator" type="button">/</button>
+      <button type="button">7</button>
+      <button type="button">8</button>
+      <button type="button">9</button>
+      <button class="operator" type="button">*</button>
+      <button type="button">4</button>
+      <button type="button">5</button>
+      <button type="button">6</button>
+      <button class="operator" type="button">-</button>
+      <button type="button">1</button>
+      <button type="button">2</button>
+      <button type="button">3</button>
+      <button class="operator" type="button">+</button>
+      <button type="button">0</button>
+      <button type="button">.</button>
+      <button type="button">00</button>
+      <button class="operator" type="button">=</button>
+    </div>
+  </div>
+  <script>
+    const outputvalueElement = document.getElementById("outputvalue");
+    const buttonElements = document.querySelectorAll("button");
+
+    buttonElements.forEach(button => {
+      if (button.innerText === 'AC') {
+        button.addEventListener("click", allClear);
+      } else if (button.innerText === 'CE') {
+        button.addEventListener("click", del);
+      } else if (button.innerText === '=') {
+        button.addEventListener("click", calculate);
+      } else {
+        button.addEventListener("click", () => display(button.innerText));
+      }
+    });
+
+    function display(character) {
+      outputvalueElement.value += character;
+    }
+
+    function allClear() {
+      outputvalueElement.value = "";
+    }
+
+    function del() {
+      if (outputvalueElement.value === "Error") {
+        outputvalueElement.value = "";
+      } else {
+        outputvalueElement.value = outputvalueElement.value.slice(0, -1);
+      }
+    }
+
+    function calculate() {
+      try {
+        outputvalueElement.value = eval(outputvalueElement.value);
+      } catch (error) {
+        outputvalueElement.value = "Error";
+      }
+    }
+  </script>
+</body>
+</html>
